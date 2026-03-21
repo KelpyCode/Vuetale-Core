@@ -1,0 +1,24 @@
+// TSConfig for modules that run in Node.js environment via either transpilation or type-stripping.
+{
+  "extends": "@tsconfig/node24/tsconfig.json",
+  "include": [
+    "vite.config.*",
+    "vitest.config.*",
+    "cypress.config.*",
+    "nightwatch.conf.*",
+    "playwright.config.*",
+    "eslint.config.*",
+    ".vuetale/**/*.ts"
+  ],
+  "compilerOptions": {
+    "composite": true,
+    // Most tools use transpilation instead of Node.js's native type-stripping.
+    // Bundler mode provides a smoother developer experience.
+    "module": "preserve",
+    "moduleResolution": "bundler",
+    // Include Node.js types and avoid accidentally including other `@types/*` packages.
+    "types": [
+      "node"
+    ],
+  }
+}

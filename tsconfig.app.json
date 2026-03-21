@@ -1,0 +1,25 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "include": [
+    "env.d.ts",
+    ".vuetale/vuetale.d.ts",
+    "lib/**/*.ts",
+    "lib/**/*.vue"
+  ],
+  "exclude": [
+    "lib/**/__tests__/*"
+  ],
+  "compilerOptions": {
+    "composite": true,
+    "noEmit": false,
+    "allowImportingTsExtensions": false,
+    // Extra safety for array and object lookups, but may have false positives.
+    "noUncheckedIndexedAccess": true,
+    // Path mapping for cleaner imports.
+    "paths": {
+      "@/*": [
+        "./lib/*"
+      ]
+    }
+  }
+}
