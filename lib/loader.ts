@@ -18,8 +18,9 @@ export function removeUserApp(id: string) {
 
 export function createUserApp(id: string) {
     console.log("Creating user app", id)
-    const app = hytaleRenderer.createApp(AppComponent);
+    const app = hytaleRenderer(id).createApp(AppComponent);
     USER_APPS.set(id, app);
+    app.mount({});
 
     return app;
 }
