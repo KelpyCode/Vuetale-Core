@@ -1,6 +1,7 @@
 import { type App } from "vue";
 import { hytaleRenderer } from "./renderer";
 import AppComponent from './components/App.vue'
+import { applyStyles, flushPendingStyles } from "./styles";
 
 function expose<T>(name: string, value: T) {
     (globalThis as unknown as Record<string, T>)[name] = value;
@@ -20,6 +21,7 @@ export function removeUserApp(id: string) {
 
 export function createUserApp(id: string) {
     console.log("Creating user app", id)
+    flushPendingStyles();
     const app = hytaleRenderer(id).createApp(AppComponent);
     app.provide("appId", id);
     USER_APPS.set(id, app);
@@ -40,6 +42,7 @@ export function registerUserAppRef(id: string, ref: unknown) {
 }
 
 expose("_vt", {
+    applyStyles,
     createUserApp,
     getUserApp,
     getUserAppRef,

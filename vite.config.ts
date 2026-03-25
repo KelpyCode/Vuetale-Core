@@ -7,6 +7,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 import { resolve } from 'node:path'
 import { readdirSync } from 'node:fs'
 import { VuetalePlugin } from './.vuetale/VuetalePlugin'
+import { CssBuildPlugin } from './.vuetale/CssBuildPlugin'
 import vuetaleConfig from './lib/vuetale-plugin.json'
 
 
@@ -50,7 +51,8 @@ export default defineConfig({
     vue(),
     vueJsx(),
     vueDevTools(),
-    VuetalePlugin()
+    VuetalePlugin(),
+    CssBuildPlugin(),
   ],
   resolve: {
     alias: {
@@ -58,7 +60,7 @@ export default defineConfig({
     },
   },
   build: {
-
+    cssCodeSplit: true,
     lib: {
       entry: {
         // you can still have a main barrel if you want
@@ -74,7 +76,8 @@ export default defineConfig({
     rollupOptions: {
       external: ['vue'],
       output: {
-        preserveModules: false,   // usually false here — each entry becomes one file
+        sourcemap: "inline",
+        preserveModules: false,
         entryFileNames: '[name].js',
       }
     },
