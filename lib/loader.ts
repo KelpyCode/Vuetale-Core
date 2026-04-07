@@ -38,7 +38,13 @@ export function getUserAppRef(id: string) {
 }
 
 export function registerUserAppRef(id: string, ref: unknown) {
-    USER_APPS_REF.set(id, ref);
+    const container = {
+        _vnode: null as unknown,
+        __vue_app__: null as unknown,
+        _vtContainerId: id,
+        getRoot: () => (ref as any).root
+    };
+    USER_APPS_REF.set(id, container);
 }
 
 expose("_vt", {
@@ -46,6 +52,7 @@ expose("_vt", {
     createUserApp,
     getUserApp,
     getUserAppRef,
+    registerUserAppRef,
     removeUserApp,
     USER_APPS,
     USER_APPS_REF

@@ -9,7 +9,7 @@ import { readdirSync } from 'node:fs'
 import { VuetalePlugin } from './.vuetale/VuetalePlugin'
 import { CssBuildPlugin } from './.vuetale/CssBuildPlugin'
 import vuetaleConfig from './lib/vuetale-plugin.json'
-
+import dts from 'unplugin-dts'
 
 function getComponentEntries() {
   const componentsDir = resolve(__dirname, 'lib/components')
@@ -45,12 +45,24 @@ function getPageEntries() {
     }, {} as Record<string, string>)
 }
 
+function getTypeEntries() {
+  const typesDir = resolve(__dirname, 'lib/types')
+  return readdirSync(typesDir)
+    .filter(file => file.endsWith('.ts'))
+    .reduce((entries, file) => {
+      const name = file.replace('.ts', '')
+      entries[name] = resolve(typesDir, file)
+      return entries
+    }, {} as Record<string, string>)
+}
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
     vueJsx(),
     vueDevTools(),
+    dts.vite({ tsconfigPath: './tsconfig.app.json', processor: 'vue' }),
     VuetalePlugin(),
     CssBuildPlugin(),
   ],
@@ -67,7 +79,7 @@ export default defineConfig({
         // index: resolve(__dirname, 'src/index.ts'),
         ...getPageEntries(),   // Button, Card, Modal, ...
         ...getComponentEntries(),
-        ...getScriptEntries()
+        ...getScriptEntries(),
       },
       formats: ['es'],
       fileName: (_, entryName) => `${entryName}.js`
@@ -77,9 +89,10 @@ export default defineConfig({
       external: ['vue'],
       output: {
         sourcemap: "inline",
-        preserveModules: false,
+        preserveModules: true,
         entryFileNames: '[name].js',
-      }
+
+      },
     },
 
     outDir: '../main/resources/vuetale/' + vuetaleConfig.name,
