@@ -1,10 +1,18 @@
 <script setup lang="ts">
+interface Props {
+    style: number
+}
+
+const props = defineProps<Props>()
+
 console.log("Test component")
+
 </script>
 <template>
-    <div style="Width: 20; Height: 20" class="example-class">
-        <span>Test comp</span>
-    </div>
+    <Group :anchor="{ Full: 0 }" class="example-class2">
+        <Label text="abc fsdfsd123!">
+        </Label>
+    </Group>
 </template>
 
 <style>
@@ -14,5 +22,8 @@ console.log("Test component")
     color: red;
     anchor-left: 12;
     anchor-right: 400;
+    padding: 20px;
+    my-render-target-color: 12;
+
 }
 </style>

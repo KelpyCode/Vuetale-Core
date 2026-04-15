@@ -11,8 +11,14 @@ function clickTest() {
 
 </script>
 <template>
-    <div>
+    <Group :anchor="{ Full: 1, Left: 0, Right: 0 }">
         <Test @click="clickTest"></Test>
-        <Common.BackButton :anchor="{ Bottom: 123 }"></Common.BackButton>
-    </div>
+        <TextField :placeholder-style="{}"></TextField>
+        <Common.PageOverlay>
+        </Common.PageOverlay>
+        <!-- <Common.BackButton :anchor="{ Bottom: 123 }"></Common.BackButton> -->
+    </Group>
 </template>
+<style>
+.test {}
+</style>

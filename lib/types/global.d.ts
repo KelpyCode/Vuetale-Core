@@ -462,7 +462,7 @@ export type NATIVE = {
         /** Defines how much space to keep around the content. Background is unaffected. */
         padding?: Padding;
         /** Button style */
-        style?: ButtonStyle;
+        elStyle?: ButtonStyle; // Original name: Style
         /** Specifies a delay in seconds for long the mouse has to stay on this element for the tooltip to appear */
         textTooltipShowDelay?: number;
         /** Style options for the text tooltip */
@@ -555,7 +555,7 @@ export type NATIVE = {
         /** Defines how much space to keep around the content. Background is unaffected. */
         padding?: Padding;
         /** Button style */
-        style?: ButtonStyle;
+        elStyle?: ButtonStyle; // Original name: Style
         /** Specifies a delay in seconds for long the mouse has to stay on this element for the tooltip to appear */
         textTooltipShowDelay?: number;
         /** Style options for the text tooltip */
@@ -596,7 +596,7 @@ export type NATIVE = {
         overscroll?: boolean;
         /** Defines how much space to keep around the content. Background is unaffected. */
         padding?: Padding;
-        style?: BlockSelectorStyle;
+        elStyle?: BlockSelectorStyle; // Original name: Style
         /** Specifies a delay in seconds for long the mouse has to stay on this element for the tooltip to appear */
         textTooltipShowDelay?: number;
         /** Style options for the text tooltip */
@@ -642,7 +642,7 @@ export type NATIVE = {
         /** Defines how much space to keep around the content. Background is unaffected. */
         padding?: Padding;
         /** Button style */
-        style?: ButtonStyle;
+        elStyle?: ButtonStyle; // Original name: Style
         /** Specifies a delay in seconds for long the mouse has to stay on this element for the tooltip to appear */
         textTooltipShowDelay?: number;
         /** Style options for the text tooltip */
@@ -722,7 +722,7 @@ export type NATIVE = {
         overscroll?: boolean;
         /** Defines how much space to keep around the content. Background is unaffected. */
         padding?: Padding;
-        style?: CheckBoxStyle;
+        elStyle?: CheckBoxStyle; // Original name: Style
         /** Specifies a delay in seconds for long the mouse has to stay on this element for the tooltip to appear */
         textTooltipShowDelay?: number;
         /** Style options for the text tooltip */
@@ -874,7 +874,7 @@ export type NATIVE = {
         placeholderText?: string;
         scrollbarStyle?: ScrollbarStyle;
         /** Text style properties */
-        style?: InputFieldStyle;
+        elStyle?: InputFieldStyle; // Original name: Style
         /** Specifies a delay in seconds for long the mouse has to stay on this element for the tooltip to appear */
         textTooltipShowDelay?: number;
         /** Style options for the text tooltip */
@@ -918,7 +918,7 @@ export type NATIVE = {
         /** Defines how much space to keep around the content. Background is unaffected. */
         padding?: Padding;
         selected?: unknown;
-        style?: ColorOptionGridStyle;
+        elStyle?: ColorOptionGridStyle; // Original name: Style
         /** Specifies a delay in seconds for long the mouse has to stay on this element for the tooltip to appear */
         textTooltipShowDelay?: number;
         /** Style options for the text tooltip */
@@ -965,7 +965,7 @@ export type NATIVE = {
         padding?: Padding;
         /** If set to true and the color is being changed while the transparency is set to 0, the transparency will be set to opaque */
         resetTransparencyWhenChangingColor?: boolean;
-        style?: ColorPickerDropdownBoxStyle;
+        elStyle?: ColorPickerDropdownBoxStyle; // Original name: Style
         /** Specifies a delay in seconds for long the mouse has to stay on this element for the tooltip to appear */
         textTooltipShowDelay?: number;
         /** Style options for the text tooltip */
@@ -1026,7 +1026,7 @@ export type NATIVE = {
         /** Text that will be displayed when the field is empty */
         placeholderText?: string;
         /** Text style properties */
-        style?: InputFieldStyle;
+        elStyle?: InputFieldStyle; // Original name: Style
         /** Specifies a delay in seconds for long the mouse has to stay on this element for the tooltip to appear */
         textTooltipShowDelay?: number;
         /** Style options for the text tooltip */
@@ -1078,7 +1078,7 @@ export type NATIVE = {
         selectedValues?: Array<string>;
         showLabel?: boolean;
         showSearchInput?: boolean;
-        style?: DropdownBoxStyle;
+        elStyle?: DropdownBoxStyle; // Original name: Style
         /** Specifies a delay in seconds for long the mouse has to stay on this element for the tooltip to appear */
         textTooltipShowDelay?: number;
         /** Style options for the text tooltip */
@@ -1125,7 +1125,7 @@ export type NATIVE = {
         padding?: Padding;
         selected?: boolean;
         /** Button style */
-        style?: ButtonStyle;
+        elStyle?: ButtonStyle; // Original name: Style
         text?: string;
         /** Specifies a delay in seconds for long the mouse has to stay on this element for the tooltip to appear */
         textTooltipShowDelay?: number;
@@ -1266,7 +1266,7 @@ export type NATIVE = {
         /** The amount by which to increment/decrement the value */
         step?: number;
         /** Style properties */
-        style?: SliderStyle;
+        elStyle?: SliderStyle; // Original name: Style
         /** Specifies a delay in seconds for long the mouse has to stay on this element for the tooltip to appear */
         textTooltipShowDelay?: number;
         /** Style options for the text tooltip */
@@ -1460,7 +1460,7 @@ export type NATIVE = {
         showScrollbar?: boolean;
         slots?: ItemGridSlot[];
         slotsPerRow?: number;
-        style?: ItemGridStyle;
+        elStyle?: ItemGridStyle; // Original name: Style
         /** Specifies a delay in seconds for long the mouse has to stay on this element for the tooltip to appear */
         textTooltipShowDelay?: number;
         /** Style options for the text tooltip */
@@ -1632,7 +1632,7 @@ export type NATIVE = {
         /** Defines how much space to keep around the content. Background is unaffected. */
         padding?: Padding;
         /** Button style */
-        style?: ButtonStyle;
+        elStyle?: ButtonStyle; // Original name: Style
         /** Specifies a delay in seconds for long the mouse has to stay on this element for the tooltip to appear */
         textTooltipShowDelay?: number;
         /** Style options for the text tooltip */
@@ -1673,7 +1673,7 @@ export type NATIVE = {
         /** Defines how much space to keep around the content. Background is unaffected. */
         padding?: Padding;
         /** Label style */
-        style?: LabelStyle;
+        elStyle?: LabelStyle; // Original name: Style
         /** Text */
         text?: string;
         /** Text spans. Used for formatting text */
@@ -1718,7 +1718,7 @@ export type NATIVE = {
         overscroll?: boolean;
         /** Defines how much space to keep around the content. Background is unaffected. */
         padding?: Padding;
-        style?: LabeledCheckBoxStyle;
+        elStyle?: LabeledCheckBoxStyle; // Original name: Style
         /** Specifies a delay in seconds for long the mouse has to stay on this element for the tooltip to appear */
         textTooltipShowDelay?: number;
         /** Style options for the text tooltip */
@@ -1768,7 +1768,7 @@ export type NATIVE = {
         popupStyle?: PopupStyle;
         selectedStyle?: TextButtonStyle;
         /** Button style */
-        style?: TextButtonStyle;
+        elStyle?: TextButtonStyle; // Original name: Style
         /** Button text */
         text?: string;
         /** Text spans. Used for formatting text */
@@ -1834,7 +1834,7 @@ export type NATIVE = {
         placeholderText?: string;
         scrollbarStyle?: ScrollbarStyle;
         /** Text style properties */
-        style?: InputFieldStyle;
+        elStyle?: InputFieldStyle; // Original name: Style
         /** Specifies a delay in seconds for long the mouse has to stay on this element for the tooltip to appear */
         textTooltipShowDelay?: number;
         /** Style options for the text tooltip */
@@ -1892,7 +1892,7 @@ export type NATIVE = {
         /** Text style properties for placeholder text */
         placeholderStyle?: InputFieldStyle;
         /** Text style properties */
-        style?: InputFieldStyle;
+        elStyle?: InputFieldStyle; // Original name: Style
         /** Specifies a delay in seconds for long the mouse has to stay on this element for the tooltip to appear */
         textTooltipShowDelay?: number;
         /** Style options for the text tooltip */
@@ -2158,7 +2158,7 @@ export type NATIVE = {
         /** The amount by which to increment/decrement the value */
         step?: number;
         /** Style properties */
-        style?: SliderStyle;
+        elStyle?: SliderStyle; // Original name: Style
         /** Specifies a delay in seconds for long the mouse has to stay on this element for the tooltip to appear */
         textTooltipShowDelay?: number;
         /** Style options for the text tooltip */
@@ -2317,7 +2317,7 @@ export type NATIVE = {
         /** Defines how much space to keep around the content. Background is unaffected. */
         padding?: Padding;
         /** Button style */
-        style?: ButtonStyle;
+        elStyle?: ButtonStyle; // Original name: Style
         text?: string;
         /** Specifies a delay in seconds for long the mouse has to stay on this element for the tooltip to appear */
         textTooltipShowDelay?: number;
@@ -2360,7 +2360,7 @@ export type NATIVE = {
         /** Defines how much space to keep around the content. Background is unaffected. */
         padding?: Padding;
         selectedTab?: string;
-        style?: TabNavigationStyle;
+        elStyle?: TabNavigationStyle; // Original name: Style
         tabs?: Tab[];
         /** Specifies a delay in seconds for long the mouse has to stay on this element for the tooltip to appear */
         textTooltipShowDelay?: number;
@@ -2404,7 +2404,7 @@ export type NATIVE = {
         /** Defines how much space to keep around the content. Background is unaffected. */
         padding?: Padding;
         /** Button style */
-        style?: TextButtonStyle;
+        elStyle?: TextButtonStyle; // Original name: Style
         /** Button text */
         text?: string;
         /** Text spans. Used for formatting text */
@@ -2465,7 +2465,7 @@ export type NATIVE = {
         /** Text that will be displayed when the field is empty */
         placeholderText?: string;
         /** Text style properties */
-        style?: InputFieldStyle;
+        elStyle?: InputFieldStyle; // Original name: Style
         /** Specifies a delay in seconds for long the mouse has to stay on this element for the tooltip to appear */
         textTooltipShowDelay?: number;
         /** Style options for the text tooltip */
@@ -2510,7 +2510,7 @@ export type NATIVE = {
         paused?: boolean;
         seconds?: number;
         /** Label style */
-        style?: LabelStyle;
+        elStyle?: LabelStyle; // Original name: Style
         /** Text */
         text?: string;
         /** Text spans. Used for formatting text */
@@ -2559,7 +2559,7 @@ export type NATIVE = {
         /** Defines how much space to keep around the content. Background is unaffected. */
         padding?: Padding;
         /** Button style */
-        style?: ToggleButtonStyle;
+        elStyle?: ToggleButtonStyle; // Original name: Style
         /** Specifies a delay in seconds for long the mouse has to stay on this element for the tooltip to appear */
         textTooltipShowDelay?: number;
         /** Style options for the text tooltip */
