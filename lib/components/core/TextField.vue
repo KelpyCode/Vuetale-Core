@@ -27,6 +27,6 @@ const value = computed({
 <template>
     <Group :anchor="{ Top: 40 }">
         <Label>TEST</Label>
-        <Common.TextField v-bind="{ ...attrs }" @valuechanged="value = $event" :value="value"></Common.TextField>
+        <Common.TextField v-bind="{ ...attrs }" @valuechanged="value = $event"></Common.TextField>
     </Group>
 </template>

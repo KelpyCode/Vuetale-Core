@@ -22,7 +22,10 @@ const text = ref("nothing yet")
             </template>
             <template #content>
                 <Group layout-mode="Top" :flex-weight="1" :anchor="{ Full: 1 }">
-                    <Label>You can also write inside tags {{ text }}</Label>
+                    <Group>
+
+                        <Label>You can also write inside tags {{ text }}</Label>
+                    </Group>
                     <Common.TextButton text="Example test" @activating="clickTest" :anchor="{ Height: 20, Top: 80 }">
                     </Common.TextButton>
 
