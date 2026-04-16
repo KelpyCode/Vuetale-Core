@@ -18,7 +18,7 @@ const text = ref("nothing yet")
     <Group :anchor="{ Full: 1, Left: 0, Right: 0 }">
         <Common.Container :anchor="{ Height: 800, Width: 600 }" close-button>
             <template #title>
-                <Common.Title :text="someState ? 'Title example' : 'Another title'"></Common.Title>
+                <Common.Title :text="someState ? 'Title example' : 'Anotherx title'"></Common.Title>
             </template>
             <template #content>
                 <Group layout-mode="Top" :flex-weight="1" :anchor="{ Full: 1 }">
@@ -29,7 +29,7 @@ const text = ref("nothing yet")
                     <Common.TextButton text="Example test" @activating="clickTest" :anchor="{ Height: 20, Top: 80 }">
                     </Common.TextButton>
 
-                    <Core.TextField v-model="text" :anchor="{ Height: 30, Top: 50 }">
+                    <Core.TextField v-if="someState" v-model="text" :anchor="{ Height: 120, Top: 10, Width: 200 }">
                     </Core.TextField>
                 </Group>
             </template>

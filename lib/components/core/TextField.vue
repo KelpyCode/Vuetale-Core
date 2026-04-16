@@ -1,7 +1,12 @@
 <script setup lang="ts">
-import { computed, useAttrs } from 'vue';
+import { computed, nextTick, ref, useAttrs } from 'vue';
 import { Common } from '../Common';
 import type { NATIVE } from '@/types/global';
+import { useForwardedBindings } from '@/composables/useForwardedBindings';
+
+defineOptions({
+    inheritAttrs: false,
+})
 
 type Props = NATIVE['TextField'] & {
     modelValue?: string
@@ -22,11 +27,29 @@ const value = computed({
     }
 })
 
+const { forwardedBindings } = useForwardedBindings(
+    props as Record<string, unknown>,
+    attrs,
+    { exclude: ['modelValue', 'value'] },
+)
+
+const ignoreUpdate = ref(false)
+
+function onValueChanged(event: string) {
+    ignoreUpdate.value = true
+    value.value = event
+    nextTick(() => {
+        ignoreUpdate.value = false
+    })
+}
+
 </script>
 
 <template>
     <Group :anchor="{ Top: 40 }">
         <Label>TEST</Label>
-        <Common.TextField v-bind="{ ...attrs }" @valuechanged="value = $event"></Common.TextField>
+        <Common.TextField v-bind="forwardedBindings" @valuechanged="onValueChanged" :value="value"
+            :vt-skip-update="ignoreUpdate">
+        </Common.TextField>
     </Group>
 </template>
