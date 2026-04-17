@@ -1,3 +1,34 @@
+@import "tailwindcss";
+@source "../**/*.{vue,ts}";
+
+@theme {
+  --*: initial;
+
+  /* Only keep design tokens that map to utilities you want available. */
+  --color-ui-primary: #3a7bd5;
+  --color-ui-accent: #ef7f5a;
+  --radius-ui: 8px;
+  --spacing: 4px;
+}
+
+/* Custom utility API for your renderer. These are Tailwind-aware and appear in IntelliSense. */
+@utility ui-panel {
+  background-color: var(--color-ui-primary);
+  border-radius: var(--radius-ui);
+}
+
+@utility ui-text-accent {
+  color: var(--color-ui-accent);
+}
+
+@utility ui-p-2 {
+  padding: calc(var(--spacing) * 2);
+}
+
+@utility ui-px-3 {
+  padding-inline: calc(var(--spacing) * 3);
+}
+
 .something {
   color: yellow;
   padding-left: 20px;

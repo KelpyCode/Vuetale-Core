@@ -1,41 +1,16 @@
 <script setup lang="ts">
-import { Common } from './Common';
-import { ref } from 'vue';
-import { Core } from './Core';
+import ErrorBoundary from './ErrorBoundary.vue';
+import TestPage from '@/pages/TestPage.vue';
 
-console.log("WORKS!")
-
-function clickTest() {
-    console.log("CLICKED ME")
-    someState.value = !someState.value
-}
-
-const someState = ref(false)
-const text = ref("nothing yet")
 
 </script>
 <template>
-    <Group :anchor="{ Full: 1, Left: 0, Right: 0 }">
-        <Common.Container :anchor="{ Height: 800, Width: 600 }" close-button>
-            <template #title>
-                <Common.Title :text="someState ? 'Title example' : 'Anotherx title'"></Common.Title>
-            </template>
-            <template #content>
-                <Group layout-mode="Top" :flex-weight="1" :anchor="{ Full: 1 }">
-                    <Group>
-
-                        <Label>You can also write inside tags {{ text }}</Label>
-                    </Group>
-                    <Common.TextButton text="Example test" @activating="clickTest" :anchor="{ Height: 20, Top: 80 }">
-                    </Common.TextButton>
-
-                    <Core.TextField v-if="someState" v-model="text" :anchor="{ Height: 120, Top: 10, Width: 200 }">
-                    </Core.TextField>
-                </Group>
-            </template>
-        </Common.Container>
-
-    </Group>
+    <ErrorBoundary>
+        <Group>
+            <Label>Hi</Label>
+        </Group>
+        <TestPage />
+    </ErrorBoundary>
 </template>
 <style>
 .test {}

@@ -15,10 +15,12 @@
     "format": "prettier --write --experimental-cli src/"
   },
   "dependencies": {
+    "tailwindcss": "^4.2.2",
     "vue": "^3.5.29"
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.58.1",
+    "@tailwindcss/vite": "^4.2.2",
     "@tsconfig/node24": "^24.0.4",
     "@types/node": "^24.11.0",
     "@vitejs/plugin-vue": "^6.0.4",

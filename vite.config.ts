@@ -3,6 +3,7 @@ import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
+import tailwindcss from '@tailwindcss/vite'
 import vueDevTools from 'vite-plugin-vue-devtools'
 import { resolve } from 'node:path'
 import { readdirSync } from 'node:fs'
@@ -64,6 +65,7 @@ function getTypeEntries() {
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => ({
   plugins: [
+    tailwindcss({}),
     vue({
       template: {
         compilerOptions: {
@@ -86,6 +88,7 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     cssCodeSplit: true,
+    sourcemap: 'inline',
     lib: {
       entry: {
         // you can still have a main barrel if you want
@@ -102,7 +105,6 @@ export default defineConfig(({ mode }) => ({
     rollupOptions: {
       external: ['vue'],
       output: {
-        sourcemap: "inline",
         preserveModules: true,
         entryFileNames: '[name].js',
 

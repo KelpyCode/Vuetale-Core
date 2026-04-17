@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable vue/multi-word-component-names */
 import type { NATIVE } from "@/types/global";
-import { defineComponent, h, resolveComponent, type PropType } from "vue";
+import { defineComponent, h, type PropType } from "vue";
 import type { DefineComponent, PublicProps, SlotsType, VNode } from "vue";
 
 type C<P, S extends Record<string, (...args: any[]) => VNode[]> = Record<never, never>> = DefineComponent<P, {}, {}, {}, {}, {}, {}, {}, string, PublicProps, Readonly<P>, {}, SlotsType<S>>;

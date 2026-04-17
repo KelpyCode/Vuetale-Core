@@ -10,7 +10,6 @@
     "lib/**/__tests__/*"
   ],
   "compilerOptions": {
-    "composite": true,
     "noEmit": false,
     "allowImportingTsExtensions": false,
     // Extra safety for array and object lookups, but may have false positives.

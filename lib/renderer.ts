@@ -39,6 +39,16 @@ const isTextNode = (node: any): boolean => node?._vtText === true
  */
 const unwrap = (el: any): any => el?._kt ?? el
 
+/**
+ * Set a hidden (non-enumerable) property on obj.
+ * Non-enumerable properties are invisible to Javet's JavetObjectConverter,
+ * which iterates via forEach/memberKeys – so _vtParent/_vtChildren never
+ * trigger the "Circular structure detected" error even though they form cycles.
+ */
+const setHidden = (obj: any, key: string, value: any) => {
+    Object.defineProperty(obj, key, { value, writable: true, enumerable: false, configurable: true })
+}
+
 export const hytaleRenderer = (appId: string) => createRenderer({
     createElement: (tag: string) => {
         return wrapEl(ktBridge.createElement(appId, tag))
@@ -59,20 +69,53 @@ export const hytaleRenderer = (appId: string) => createRenderer({
         return ktBridge.setElementText(appId, unwrap(el), text)
     },
     parentNode: (node: any) => {
-        if (isTextNode(node)) return null
-        return ktBridge.parentNode(appId, unwrap(node))
+        if (node == null) return null
+        // Return the virtual parent recorded during insert()
+        return node._vtParent ?? null
     },
     nextSibling: (node: any) => {
-        if (isTextNode(node)) return null
-        return ktBridge.nextSibling(appId, unwrap(node))
+        if (node == null) return null
+        const parent = node._vtParent
+        if (!parent?._vtChildren) return null
+        const idx = parent._vtChildren.indexOf(node)
+        if (idx < 0) return null
+        return parent._vtChildren[idx + 1] ?? null
     },
-    insert: (child: any, parent: any) => {
+    insert: (child: any, parent: any, anchor?: any) => {
+        // Maintain an ordered virtual-children list on the parent.
+        // _vtParent and _vtChildren are non-enumerable so Javet's converter
+        // never traverses them (prevents "Circular structure" errors).
+        if (!parent._vtChildren) setHidden(parent, '_vtChildren', [])
+        setHidden(child, '_vtParent', parent)
+        // Remove from current position first in case this is a move.
+        const existing = parent._vtChildren.indexOf(child)
+        if (existing >= 0) parent._vtChildren.splice(existing, 1)
+        if (anchor == null) {
+            parent._vtChildren.push(child)
+        } else {
+            const anchorIdx = parent._vtChildren.indexOf(anchor)
+            if (anchorIdx >= 0) {
+                parent._vtChildren.splice(anchorIdx, 0, child)
+            } else {
+                parent._vtChildren.push(child)
+            }
+        }
+
         if (isTextNode(child)) return  // nothing to insert for text/comment sentinels
         ktBridge.insert(appId, unwrap(child), unwrap(parent))
     },
     remove: (child: any) => {
+        if (child == null) return
+        // Remove from virtual children list
+        const parent = child._vtParent
+        if (parent?._vtChildren) {
+            const idx = parent._vtChildren.indexOf(child)
+            if (idx >= 0) parent._vtChildren.splice(idx, 1)
+        }
         if (isTextNode(child)) return  // nothing to remove for text/comment sentinels
-        ktBridge.remove(appId, unwrap(child))
+        const kt = unwrap(child)
+        if (kt == null) return
+        ktBridge.remove(appId, kt)
     },
     patchProp: (el: any, key: string, prevValue: any, nextValue: any) => {
         ktBridge.patchProp(appId, unwrap(el), key, prevValue, nextValue)
