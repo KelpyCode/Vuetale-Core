@@ -38,12 +38,17 @@ export function getUserAppRef(id: string) {
 }
 
 export function registerUserAppRef(id: string, ref: unknown) {
-    const container = {
-        _vnode: null as unknown,
-        __vue_app__: null as unknown,
+    const container: Record<string, unknown> = {
         _vtContainerId: id,
         getRoot: () => (ref as any).root
     };
+    // Vue's reconciler writes _vnode and __vue_app__ onto the container.
+    // __vue_app__ is deeply circular (contains the full app context tree).
+    // Pre-defining them as non-enumerable means Javet's JavetObjectConverter
+    // never traverses them, preventing "Circular structure" errors when the
+    // container is passed to ktBridge.insert as the parent argument.
+    Object.defineProperty(container, '_vnode',      { value: null, writable: true, enumerable: false, configurable: true });
+    Object.defineProperty(container, '__vue_app__', { value: null, writable: true, enumerable: false, configurable: true });
     USER_APPS_REF.set(id, container);
 }
 
