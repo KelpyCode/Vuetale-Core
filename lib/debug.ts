@@ -10,7 +10,7 @@
 import type { App } from 'vue'
 
 declare const _vt: {
-  createUserApp(id: string): App
+  createUserApp(id: string, componentPath?: string): App
   getUserApp(id: string): App | undefined
   USER_APPS: Map<string, App>
 }
@@ -18,8 +18,8 @@ declare const _vt: {
 // ── Performance tracking ────────────────────────────────────────────────────
 
 const _originalCreateUserApp = _vt.createUserApp.bind(_vt)
-;(_vt as unknown as Record<string, unknown>).createUserApp = function (id: string): App {
-  const app = _originalCreateUserApp(id)
+;(_vt as unknown as Record<string, unknown>).createUserApp = function (id: string, componentPath?: string): App {
+  const app = _originalCreateUserApp(id, componentPath)
   app.config.performance = true
   app.config.warnHandler = (msg, instance, trace) => {
     console.warn(`[Vue warn] ${msg}\n${trace}`)
