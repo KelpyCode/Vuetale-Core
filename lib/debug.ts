@@ -1,13 +1,4 @@
-﻿/**
- * Vuetale debug utilities – loaded by JSEngine only when dev mode is active.
- *
- * Exposes `globalThis.__vt_debug__` with helpers for live inspection from
- * the JVM logger or a quick evalScript() call during development.
- *
- * Also enables Vue performance tracking on every app that is created after
- * this module loads, by patching _vt.createUserApp.
- */
-import type { App } from 'vue'
+﻿import type { App } from "vue";
 
 declare const _vt: {
   createUserApp(id: string, componentPath?: string): App
@@ -16,17 +7,16 @@ declare const _vt: {
 }
 
 // ── Performance tracking ────────────────────────────────────────────────────
-
 const _originalCreateUserApp = _vt.createUserApp.bind(_vt)
-;(_vt as unknown as Record<string, unknown>).createUserApp = function (id: string, componentPath?: string): App {
-  const app = _originalCreateUserApp(id, componentPath)
-  app.config.performance = true
-  app.config.warnHandler = (msg, instance, trace) => {
-    console.warn(`[Vue warn] ${msg}\n${trace}`)
+  ; (_vt as unknown as Record<string, unknown>).createUserApp = function (id: string, componentPath?: string): App {
+    const app = _originalCreateUserApp(id, componentPath)
+    app.config.performance = true
+    app.config.warnHandler = (msg, instance, trace) => {
+      console.warn(`[Vue warn] ${msg}\n${trace}`)
+    }
+    console.log(`[vtdebug] App '${id}' created with performance tracking enabled`)
+    return app
   }
-  console.log(`[vtdebug] App '${id}' created with performance tracking enabled`)
-  return app
-}
 
 // ── Debug API ───────────────────────────────────────────────────────────────
 
@@ -65,7 +55,7 @@ const debugApi = {
   },
 }
 
-;(globalThis as unknown as Record<string, unknown>)['__vt_debug__'] = debugApi
+  ; (globalThis as unknown as Record<string, unknown>)['__vt_debug__'] = debugApi
 
 console.log('[vtdebug] Vuetale debug module loaded. Use globalThis.__vt_debug__ to inspect apps.')
 

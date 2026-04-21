@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { Common } from '@/components/Common';
-import { Core } from '@/components/Core';
+import { Core } from '@/components/core';
 import { ref } from 'vue';
+import { useData } from '../composables/useData';
 console.log("WORKS!")
 
 function clickTest() {
@@ -13,6 +14,10 @@ function clickTest() {
 const someState = ref(false)
 const text = ref("nothing yet")
 
+const test = useData<string>("test")
+const test2 = useData("test2")
+const test3 = useData("counter")
+
 </script>
 <template>
     <Group :anchor="{ Full: 1, Left: 0, Right: 0 }">
@@ -21,15 +26,16 @@ const text = ref("nothing yet")
                 <Common.Title class="" :text="someState ? 'Title example' : 'Anotherx title'"></Common.Title>
             </template>
             <template #content>
-                <Group layout-mode="Top" :flex-weight="1" :anchor="{ Full: 1 }">
+                <Group layout-mode="Top" :flex-weight="1" :anchor="{ Full: 1 }" :background="{ Color: '#444444' }">
                     <Group>
-
-                        <Label>abcd {{ text }}</Label>
+                        <Label>dd {{ text }} | {{ test }} {{ test2?.a }} {{ test3 }}</Label>
                     </Group>
+                    <TextField></TextField>
                     <Common.TextButton text="Example test" @activating="clickTest" :anchor="{ Height: 20, Top: 80 }">
                     </Common.TextButton>
 
-                    <Core.TextField v-if="someState" v-model="text" :anchor="{ Height: 120, Top: 10, Width: 200 }">
+                    <Core.TextField v-if="someState" :decoration="{ Default: {} }" v-model="text"
+                        :anchor="{ Height: 120, Top: 10, Width: 200 }">
                     </Core.TextField>
                 </Group>
             </template>

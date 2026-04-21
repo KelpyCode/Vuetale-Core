@@ -1,11 +1,16 @@
 <template>
     <slot v-if="!error" /> <!-- Normal content: your risky component -->
 
-    <Group v-else> <!-- Fallback UI when error occurs -->
-        <Label>Something went wrong in this section.</Label>
-        <Label v-if="error">{{ error.message }}</Label>
-        <Common.TextButton @activating="reset" text="Try again"></Common.TextButton>
-    </Group>
+    <Common.DecoratedContainer :anchor="{ Width: 500, Height: 300 }" v-else> <!-- Fallback UI when error occurs -->
+        <template #content>
+
+            <Label>Something went wrong in this section.</Label>
+            <Group :background="{ Color: '#111111' }" :padding="{ Full: 10 }">
+                <Label v-if="error" :el-style="{}">{{ error.message }}</Label>
+            </Group>
+            <Common.TextButton @activating="reset" text="Try again"></Common.TextButton>
+        </template>
+    </Common.DecoratedContainer>
 </template>
 
 <script setup lang="ts">

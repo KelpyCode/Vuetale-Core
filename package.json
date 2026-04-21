@@ -16,7 +16,9 @@
   },
   "dependencies": {
     "tailwindcss": "^4.2.2",
-    "vue": "^3.5.29"
+    "vue": "^3.5.29",
+    "vuetale": "link:../../../../../../AppData/Local/pnpm/global/5/node_modules/vuetale",
+    "vuetale-companion": "link:../../../../../../AppData/Local/pnpm/global/5/node_modules/vuetale-companion"
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.58.1",

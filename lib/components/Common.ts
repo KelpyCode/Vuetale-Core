@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable vue/multi-word-component-names */
-import type { NATIVE } from "@/types/global";
+import type { NATIVE } from "vuetale/types/elements";
 import { defineComponent, h, type PropType } from "vue";
 import type { DefineComponent, PublicProps, SlotsType, VNode } from "vue";
 

@@ -1,4 +1,4 @@
-import { type App, ref } from "vue";
+import { type App, ref, type Ref, shallowReactive } from "vue";
 import { hytaleRenderer } from "./renderer";
 import AppComponent from './components/App.vue'
 import { applyStyles, flushPendingStyles } from "./styles";
@@ -16,6 +16,27 @@ export const USER_APPS_REF = new Map<string, unknown>();
 export const USER_APPS_META = new Map<string, VuetaleMeta>();
 /** Reactive component-path refs keyed by app id, so navigateTo can swap without remounting. */
 const USER_APP_COMPONENT_PATH = new Map<string, ReturnType<typeof ref<string | undefined>>>();
+/**
+ * Per-app reactive data store.
+ * Each entry is a shallowReactive plain object so Vue's computed/watch can
+ * track individual key additions and mutations directly.
+ */
+export const USER_APPS_DATA = new Map<string, Record<string, unknown>>();
+
+/**
+ * Set (or create) a reactive data value for an app.
+ * Called from the Kotlin side via JSEngine / loaderCtx.invoke.
+ */
+export function setAppData(id: string, key: string, value: unknown): void {
+    let store = USER_APPS_DATA.get(id);
+    if (!store) {
+        store = shallowReactive<Record<string, unknown>>({});
+        USER_APPS_DATA.set(id, store);
+    }
+    // Assigning a property on a shallowReactive object is tracked by Vue.
+    store[key] = value;
+}
+
 
 /** Pre-loaded component registry – populated by JSEngine before createUserApp/navigateTo. */
 const COMPONENT_REGISTRY = new Map<string, unknown>();
@@ -33,12 +54,18 @@ export function removeUserApp(id: string) {
         USER_APPS.delete(id);
         USER_APPS_REF.delete(id);
         USER_APPS_META.delete(id);
+        USER_APPS_DATA.delete(id);
     }
 }
 
 export function createUserApp(id: string, componentPath?: string) {
     console.log("Creating user app", id, componentPath ?? '(no component)')
     flushPendingStyles();
+    // Pre-create the reactive data store so useData()'s computed always finds
+    // a shallowReactive object before the first render, enabling proper tracking.
+    if (!USER_APPS_DATA.has(id)) {
+        USER_APPS_DATA.set(id, shallowReactive<Record<string, unknown>>({}));
+    }
     const pathRef = ref<string | undefined>(componentPath);
     USER_APP_COMPONENT_PATH.set(id, pathRef);
     const app = hytaleRenderer(id).createApp(AppComponent);
@@ -95,7 +122,8 @@ expose("_vt", {
     removeUserApp,
     navigateTo,
     registerComponent,
+    setAppData,
     getRegisteredComponent,
-    USER_APPS,
-    USER_APPS_REF
+    USER_APPS_REF,
+    USER_APPS_DATA,
 })

@@ -1,5 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { fn } from "vuetale-companion"
+
+
 type StyleTree = Record<string, unknown>;
 
 declare global {

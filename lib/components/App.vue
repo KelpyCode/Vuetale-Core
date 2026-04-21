@@ -31,7 +31,6 @@ if (componentPathRef) {
 }
 </script>
 <template>
-  <Label>TESTING</Label>
   <ErrorBoundary>
     <component :is="ActiveComponent" v-if="ActiveComponent" />
   </ErrorBoundary>

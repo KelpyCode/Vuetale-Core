@@ -7,7 +7,7 @@
  *       - All `.d.ts` files
  *       - The `manifest.json` describing the mod's components/pages/huds
  *  3. Writes everything into `node_modules/@<alias>/` so TypeScript and Vite's
- *     `resolve.alias` can satisfy `import ... from '@core/components/Foo'`.
+ *     `resolve.alias` can satisfy `import ... from 'vt:@core/components/Foo'`.
  *  4. Generates a `tsconfig.paths.json` snippet that can be merged into
  *     `tsconfig.app.json` via the `extends` array or a reference include.
  *
@@ -208,10 +208,10 @@ function writeTsconfigPaths(modules: ExtractedModule[]) {
     const paths: Record<string, string[]> = {};
 
     for (const mod of modules) {
-        // @alias  →  node_modules/@alias/index.d.ts
-        paths[`@${mod.alias}`] = [`./node_modules/@${mod.alias}/index.d.ts`];
-        // @alias/*  →  node_modules/@alias/*
-        paths[`@${mod.alias}/*`] = [`./node_modules/@${mod.alias}/*`];
+        // vt:@alias  →  node_modules/@alias/index.d.ts
+        paths[`vt:@${mod.alias}`] = [`./node_modules/@${mod.alias}/index.d.ts`];
+        // vt:@alias/*  →  node_modules/@alias/*
+        paths[`vt:@${mod.alias}/*`] = [`./node_modules/@${mod.alias}/*`];
     }
 
     const out = {
@@ -234,8 +234,11 @@ function writeViteAliases(modules: ExtractedModule[]) {
         `export const vuetaleAliases: Record<string, string> = {`,
     ];
 
+    const jsonAliases: Record<string, string> = {};
+
     for (const mod of modules) {
-        lines.push(`  '@${mod.alias}': resolve(__dirname, '../node_modules/@${mod.alias}'),`);
+        lines.push(`  'vt:@${mod.alias}': resolve(__dirname, '../node_modules/@${mod.alias}'),`);
+        jsonAliases[`vt:@${mod.alias}`] = `./node_modules/@${mod.alias}`;
     }
 
     lines.push(`};`);
@@ -243,6 +246,11 @@ function writeViteAliases(modules: ExtractedModule[]) {
     const dest = path.join(ROOT, '.vuetale', 'vuetale-aliases.ts');
     writeFile(dest, lines.join('\n') + '\n');
     console.log(`[extract-dts] Wrote .vuetale/vuetale-aliases.ts`);
+
+    // Also write aliases.json consumed by vite.config.ts at build time
+    const jsonDest = path.join(ROOT, '.vuetale', 'aliases.json');
+    writeFile(jsonDest, JSON.stringify(jsonAliases, null, 2));
+    console.log(`[extract-dts] Wrote .vuetale/aliases.json`);
 }
 
 // ---------------------------------------------------------------------------
@@ -295,4 +303,8 @@ main().catch(err => {
     console.error('[extract-dts] Fatal error:', err);
     process.exit(1);
 });
+
+
+
+
 

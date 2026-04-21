@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, nextTick, ref, useAttrs } from 'vue';
 import { Common } from '../Common';
-import type { NATIVE } from '@/types/global';
+import type { NATIVE } from 'vuetale/types/elements';
 import { useForwardedBindings } from '@/composables/useForwardedBindings';
 
 defineOptions({
