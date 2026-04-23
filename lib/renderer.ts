@@ -102,7 +102,14 @@ export const hytaleRenderer = (appId: string) => createRenderer({
         }
 
         if (isTextNode(child)) return  // nothing to insert for text/comment sentinels
-        ktBridge.insert(appId, unwrap(child), unwrap(parent))
+        // Resolve the anchor to a real (non-text) node so Kotlin can find it in children.
+        let resolvedAnchor = anchor
+        while (resolvedAnchor != null && isTextNode(resolvedAnchor)) {
+            resolvedAnchor = resolvedAnchor._vtParent?._vtChildren[
+                resolvedAnchor._vtParent._vtChildren.indexOf(resolvedAnchor) + 1
+            ] ?? null
+        }
+        ktBridge.insert(appId, unwrap(child), unwrap(parent), resolvedAnchor ? unwrap(resolvedAnchor) : null)
     },
     remove: (child: any) => {
         if (child == null) return
