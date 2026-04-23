@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Common } from '@/components/Common';
 import { Core } from '@/components/core';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useData } from '../composables/useData';
 console.log("WORKS!")
 
@@ -17,6 +17,29 @@ const text = ref("nothing yet")
 const test = useData<string>("test")
 const test2 = useData("test2")
 const test3 = useData("counter")
+
+interface TestEntry {
+    name: string
+    toggle: boolean
+}
+
+const testEntries = ref<TestEntry[]>([]);
+
+function addEntry() {
+    testEntries.value.push({ name: `Entry ${testEntries.value.length + 1}`, toggle: false });
+}
+
+function removeEntry(index: number) {
+    testEntries.value.splice(index, 1);
+}
+
+function moveEntryUp(index: number) {
+    if (index > 0) {
+        const temp = testEntries.value[index]!;
+        testEntries.value[index] = testEntries.value[index - 1]!;
+        testEntries.value[index - 1] = temp;
+    }
+}
 
 </script>
 <template>
@@ -37,7 +60,23 @@ const test3 = useData("counter")
                     <Core.TextField v-if="someState" :decoration="{ Default: {} }" v-model="text"
                         :anchor="{ Height: 120, Top: 10, Width: 200 }">
                     </Core.TextField>
+
+                    <Group layout-mode="TopScrolling">
+
+                        <Group v-for="(entry, index) in testEntries" :key="index" :anchor="{ Height: 200 }">
+                            <Label>{{ entry.name }}</Label>
+                            <Core.TextField v-model="entry.name"></Core.TextField>
+                            <Common.TextButton text="Remove" @activating="() => removeEntry(index)"
+                                :anchor="{ Height: 20, Top: 5, Left: 100 }"></Common.TextButton>
+                            <Common.TextButton text="Up" @activating="() => moveEntryUp(index)"
+                                :anchor="{ Height: 20, Top: 5, Left: 160 }"></Common.TextButton>
+                        </Group>
+
+                        <Common.TextButton text="Add Entry" @activating="addEntry" :anchor="{ Height: 20, Top: 10 }">
+                        </Common.TextButton>
+                    </Group>
                 </Group>
+
             </template>
         </Common.Container>
 
