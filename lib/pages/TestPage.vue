@@ -28,7 +28,7 @@ const test3 = useData("counter")
             <template #content>
                 <Group layout-mode="Top" :flex-weight="1" :anchor="{ Full: 1 }" :background="{ Color: '#444444' }">
                     <Group>
-                        <Label>dd {{ text }} | {{ test }} {{ test2?.a }} {{ test3 }}</Label>
+                        <Label> {{ text }} | {{ test }} {{ test2?.a }} {{ test3 }}</Label>
                     </Group>
                     <TextField></TextField>
                     <Common.TextButton text="Example test" @activating="clickTest" :anchor="{ Height: 20, Top: 80 }">
