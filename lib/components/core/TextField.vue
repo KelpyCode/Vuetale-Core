@@ -48,10 +48,7 @@ function onValueChanged(event: string) {
 </script>
 
 <template>
-    <Group :anchor="{ Top: 40 }">
-        <Label>TEST</Label>
-        <Common.TextField v-bind="forwardedBindings" @valuechanged="onValueChanged" :value="value"
-            :vt-skip-update="ignoreUpdate">
-        </Common.TextField>
-    </Group>
+    <Common.TextField v-bind="forwardedBindings" @value-changed="onValueChanged" :value="value"
+        :vt-skip-update="ignoreUpdate">
+    </Common.TextField>
 </template>
