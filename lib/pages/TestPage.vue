@@ -5,9 +5,15 @@ import { computed, ref } from 'vue';
 import { useData } from '../composables/useData';
 console.log("WORKS!")
 
+const testFn = useData("testFn", () => { })
+const testFn2 = useData("testFn2", (a: number, b: string) => { })
+
+
 function clickTest() {
     console.log("CLICKED ME")
     someState.value = !someState.value
+    testFn.value()
+    console.log("Return of testFn2: ", testFn2.value(123, "hello"))
 }
 
 
@@ -17,6 +23,7 @@ const text = ref("nothing yet")
 const test = useData<string>("test")
 const test2 = useData("test2")
 const test3 = useData("counter")
+
 
 interface TestEntry {
     name: string

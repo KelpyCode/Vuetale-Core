@@ -11,6 +11,8 @@ interface VuetaleMeta {
     props: Record<string, unknown>;
 }
 
+declare const ktBridge: Record<string, unknown>;
+
 export const USER_APPS = new Map<string, App>();
 export const USER_APPS_REF = new Map<string, unknown>();
 export const USER_APPS_META = new Map<string, VuetaleMeta>();
@@ -33,8 +35,28 @@ export function setAppData(id: string, key: string, value: unknown): void {
         store = shallowReactive<Record<string, unknown>>({});
         USER_APPS_DATA.set(id, store);
     }
+    // Convert host-callback markers into real JS functions that call ktBridge.invokeHostCallback
+    let finalValue = value;
+    try {
+        if (value && typeof value === 'object' && '_vtHostFnId' in (value as any)) {
+            const hostId = (value as any)['_vtHostFnId'];
+            finalValue = function (...args: any[]) {
+                try {
+                    // Synchronous call into Kotlin via ktBridge. The Kotlin side may
+                    // dispatch work to server threads as needed; any return value is
+                    // returned synchronously to JS if provided.
+                    return (ktBridge as any).invokeHostCallback(hostId, ...args);
+                } catch (e) {
+                    console.error('invokeHostCallback failed for', hostId, e);
+                    throw e;
+                }
+            }
+        }
+    } catch (e) {
+        console.error('setAppData: failed to convert host callback marker', e);
+    }
     // Assigning a property on a shallowReactive object is tracked by Vue.
-    store[key] = value;
+    store[key] = finalValue;
 }
 
 
