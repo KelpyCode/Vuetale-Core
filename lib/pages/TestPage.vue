@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Common } from '@/components/Common';
 import { Core } from '@/components/core';
-import { computed, ref } from 'vue';
+import { computed, onBeforeUnmount, ref } from 'vue';
 import { useData } from '../composables/useData';
 console.log("WORKS!")
 
@@ -48,6 +48,22 @@ function moveEntryUp(index: number) {
     }
 }
 
+const counter1 = ref(0)
+const counter2 = ref(0)
+
+const s1 = setInterval(() => {
+    counter1.value++
+}, 1000)
+
+const s2 = setInterval(() => {
+    counter2.value++
+}, 1500)
+
+onBeforeUnmount(() => {
+    clearInterval(s1)
+    clearInterval(s2)
+})
+
 </script>
 <template>
     <Group :anchor="{ Full: 1, Left: 0, Right: 0 }">
@@ -58,7 +74,8 @@ function moveEntryUp(index: number) {
             <template #content>
                 <Group layout-mode="Top" :flex-weight="1" :anchor="{ Full: 1 }" :background="{ Color: '#444444' }">
                     <Group>
-                        <Label> {{ text }} | {{ test }} {{ test2?.a }} {{ test3 }}</Label>
+                        <Label> {{ text }} | {{ test }} {{ test2?.a }} {{ test3 }} | Counter1: {{ counter1 }} |
+                            Counter2: {{ counter2 }}</Label>
                     </Group>
                     <TextField></TextField>
                     <Common.TextButton text="Example test" @activating="clickTest" :anchor="{ Height: 20, Top: 80 }">
