@@ -59,6 +59,14 @@ export function setAppData(id: string, key: string, value: unknown): void {
     store[key] = finalValue;
 }
 
+export function getAppData(id: string, key: string): unknown {
+    const store = USER_APPS_DATA.get(id);
+    if (!store) {
+        return undefined;
+    }
+    return store[key];
+}
+
 
 /** Pre-loaded component registry – populated by JSEngine before createUserApp/navigateTo. */
 const COMPONENT_REGISTRY = new Map<string, unknown>();

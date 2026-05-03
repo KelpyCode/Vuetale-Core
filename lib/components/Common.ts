@@ -1,13 +1,96 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable vue/no-reserved-component-names */
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable vue/multi-word-component-names */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { Anchor, ButtonSounds, ButtonStyle, CheckBoxStyle, ColorPickerDropdownBoxStyle, ColorPickerStyle, DropdownBoxStyle, InputFieldButtonStyle, InputFieldStyle, LabelStyle, Padding, PatchStyle, ScrollbarStyle, SliderStyle, TabNavigationStyle, TextButtonStyle, TextTooltipStyle } from "vuetale/types/elements";
 import type { NATIVE } from "vuetale/types/elements";
-import { defineComponent, h, type PropType } from "vue";
+import { defineComponent, h, resolveComponent, type PropType } from "vue";
 import type { DefineComponent, PublicProps, SlotsType, VNode } from "vue";
+import * as Sounds from "./Sounds";
 
 type C<P, S extends Record<string, (...args: any[]) => VNode[]> = Record<never, never>> = DefineComponent<P, {}, {}, {}, {}, {}, {}, {}, string, PublicProps, Readonly<P>, {}, SlotsType<S>>;
+
+export const Vars = {
+    DefaultLabelStyle: (): LabelStyle => ({ "FontSize": 16, "TextColor": "#96a9be" }),
+    ButtonSounds: (): ButtonSounds => Sounds.Vars.ButtonsLight(),
+    ButtonsCancel: (): ButtonSounds => Sounds.Vars.ButtonsCancel(),
+    ButtonBorder: (): number => 12,
+    PrimaryButtonHeight: (): number => 44,
+    SmallButtonHeight: (): number => 32,
+    BigButtonHeight: (): number => 48,
+    ButtonPadding: (): number => 24,
+    DefaultButtonMinWidth: (): number => 172,
+    DefaultButtonHeight: (): number => Vars.PrimaryButtonHeight(),
+    DefaultButtonPadding: (): number => Vars.ButtonPadding(),
+    DefaultButtonDefaultBackground: (): PatchStyle => ({ "TexturePath": "Common/Buttons/Primary.png", "VerticalBorder": Vars.ButtonBorder(), "HorizontalBorder": 80 }),
+    DefaultButtonHoveredBackground: (): PatchStyle => ({ "TexturePath": "Common/Buttons/Primary_Hovered.png", "VerticalBorder": Vars.ButtonBorder(), "HorizontalBorder": 80 }),
+    DefaultButtonPressedBackground: (): PatchStyle => ({ "TexturePath": "Common/Buttons/Primary_Pressed.png", "VerticalBorder": Vars.ButtonBorder(), "HorizontalBorder": 80 }),
+    DefaultButtonDisabledBackground: (): PatchStyle => ({ "TexturePath": "Common/Buttons/Disabled.png", "VerticalBorder": Vars.ButtonBorder(), "HorizontalBorder": 80 }),
+    DefaultSquareButtonDefaultBackground: (): PatchStyle => ({ "TexturePath": "Common/Buttons/Primary_Square.png", "Border": Vars.ButtonBorder() }),
+    DefaultSquareButtonHoveredBackground: (): PatchStyle => ({ "TexturePath": "Common/Buttons/Primary_Square_Hovered.png", "Border": Vars.ButtonBorder() }),
+    DefaultSquareButtonPressedBackground: (): PatchStyle => ({ "TexturePath": "Common/Buttons/Primary_Square_Pressed.png", "Border": Vars.ButtonBorder() }),
+    DefaultSquareButtonDisabledBackground: (): PatchStyle => ({ "TexturePath": "Common/Buttons/Disabled.png", "Border": Vars.ButtonBorder() }),
+    DisabledColor: (): string => "#797b7c",
+    DefaultButtonLabelStyle: (): LabelStyle => ({ "FontSize": 17, "TextColor": "#bfcdd5", "RenderBold": true, "RenderUppercase": true, "HorizontalAlignment": "Center", "VerticalAlignment": "Center" }),
+    DefaultButtonDisabledLabelStyle: (): LabelStyle => ({ ...Vars.DefaultButtonLabelStyle(), "TextColor": Vars.DisabledColor() }),
+    PrimaryButtonLabelStyle: (): LabelStyle => Vars.DefaultButtonLabelStyle(),
+    PrimaryButtonDisabledLabelStyle: (): LabelStyle => Vars.DefaultButtonDisabledLabelStyle(),
+    SecondaryButtonLabelStyle: (): LabelStyle => ({ ...Vars.DefaultButtonLabelStyle(), "TextColor": "#bdcbd3" }),
+    SecondaryButtonDisabledLabelStyle: (): LabelStyle => ({ ...Vars.SecondaryButtonLabelStyle(), "TextColor": Vars.DisabledColor() }),
+    SmallButtonLabelStyle: (): LabelStyle => ({ ...Vars.DefaultButtonLabelStyle(), "FontSize": 14 }),
+    SmallButtonDisabledLabelStyle: (): LabelStyle => ({ ...Vars.SmallButtonLabelStyle(), "TextColor": Vars.DisabledColor() }),
+    SmallSecondaryButtonLabelStyle: (): LabelStyle => ({ ...Vars.SecondaryButtonLabelStyle(), "FontSize": 14 }),
+    SmallSecondaryButtonDisabledLabelStyle: (): LabelStyle => ({ ...Vars.SmallSecondaryButtonLabelStyle(), "TextColor": Vars.DisabledColor() }),
+    DefaultButtonStyle: (): ButtonStyle => ({ "Default": { "Background": Vars.DefaultButtonDefaultBackground() }, "Hovered": { "Background": Vars.DefaultButtonHoveredBackground() }, "Pressed": { "Background": Vars.DefaultButtonPressedBackground() }, "Disabled": { "Background": Vars.DefaultButtonDisabledBackground() }, "Sounds": Vars.ButtonSounds() }),
+    DefaultTextButtonStyle: (): TextButtonStyle => ({ "Default": { "Background": Vars.DefaultButtonDefaultBackground(), "LabelStyle": Vars.DefaultButtonLabelStyle() }, "Hovered": { "Background": Vars.DefaultButtonHoveredBackground(), "LabelStyle": Vars.DefaultButtonLabelStyle() }, "Pressed": { "Background": Vars.DefaultButtonPressedBackground(), "LabelStyle": Vars.DefaultButtonLabelStyle() }, "Disabled": { "Background": Vars.DefaultButtonDisabledBackground(), "LabelStyle": Vars.DefaultButtonDisabledLabelStyle() }, "Sounds": Vars.ButtonSounds() }),
+    SmallDefaultTextButtonStyle: (): TextButtonStyle => ({ "Default": { "Background": { "TexturePath": "Common/ButtonSmall.png", "Border": 6 }, "LabelStyle": Vars.SmallButtonLabelStyle() }, "Hovered": { "Background": { "TexturePath": "Common/ButtonSmallHovered.png", "Border": 6 }, "LabelStyle": Vars.SmallButtonLabelStyle() }, "Pressed": { "Background": { "TexturePath": "Common/ButtonSmallPressed.png", "Border": 6 }, "LabelStyle": Vars.SmallButtonLabelStyle() }, "Disabled": { "Background": Vars.DefaultButtonDisabledBackground(), "LabelStyle": Vars.SmallButtonDisabledLabelStyle() }, "Sounds": Vars.ButtonSounds() }),
+    CancelTextButtonStyle: (): TextButtonStyle => ({ "Default": { "Background": { "TexturePath": "Common/Buttons/Destructive.png", "Border": Vars.ButtonBorder() }, "LabelStyle": Vars.DefaultButtonLabelStyle() }, "Hovered": { "Background": { "TexturePath": "Common/Buttons/Destructive_Hovered.png", "Border": Vars.ButtonBorder() }, "LabelStyle": Vars.DefaultButtonLabelStyle() }, "Pressed": { "Background": { "TexturePath": "Common/Buttons/Destructive_Pressed.png", "Border": Vars.ButtonBorder() }, "LabelStyle": Vars.DefaultButtonLabelStyle() }, "Disabled": { "Background": { "TexturePath": "Common/Buttons/Disabled.png", "Border": Vars.ButtonBorder() }, "LabelStyle": Vars.DefaultButtonLabelStyle() }, "Sounds": Vars.ButtonsCancel() }),
+    CancelButtonStyle: (): ButtonStyle => ({ "Default": { "Background": { "TexturePath": "Common/Buttons/Destructive.png", "Border": Vars.ButtonBorder() } }, "Hovered": { "Background": { "TexturePath": "Common/Buttons/Destructive_Hovered.png", "Border": Vars.ButtonBorder() } }, "Pressed": { "Background": { "TexturePath": "Common/Buttons/Destructive_Pressed.png", "Border": Vars.ButtonBorder() } }, "Disabled": { "Background": { "TexturePath": "Common/Buttons/Disabled.png", "Border": Vars.ButtonBorder() } }, "Sounds": Vars.ButtonSounds() }),
+    SecondaryButtonStyle: (): ButtonStyle => ({ "Default": { "Background": { "TexturePath": "Common/Buttons/Secondary.png", "Border": Vars.ButtonBorder() } }, "Hovered": { "Background": { "TexturePath": "Common/Buttons/Secondary_Hovered.png", "Border": Vars.ButtonBorder() } }, "Pressed": { "Background": { "TexturePath": "Common/Buttons/Secondary_Pressed.png", "Border": Vars.ButtonBorder() } }, "Disabled": { "Background": { "TexturePath": "Common/Buttons/Disabled.png", "Border": Vars.ButtonBorder() } }, "Sounds": Vars.ButtonSounds() }),
+    SecondaryTextButtonStyle: (): TextButtonStyle => ({ "Default": { "Background": { "TexturePath": "Common/Buttons/Secondary.png", "Border": Vars.ButtonBorder() }, "LabelStyle": Vars.SecondaryButtonLabelStyle() }, "Hovered": { "Background": { "TexturePath": "Common/Buttons/Secondary_Hovered.png", "Border": Vars.ButtonBorder() }, "LabelStyle": Vars.SecondaryButtonLabelStyle() }, "Pressed": { "Background": { "TexturePath": "Common/Buttons/Secondary_Pressed.png", "Border": Vars.ButtonBorder() }, "LabelStyle": Vars.SecondaryButtonLabelStyle() }, "Disabled": { "Background": { "TexturePath": "Common/Buttons/Disabled.png", "Border": Vars.ButtonBorder() }, "LabelStyle": Vars.SecondaryButtonLabelStyle() } }),
+    TertiaryButtonStyle: (): ButtonStyle => ({ "Default": { "Background": { "TexturePath": "Common/Buttons/Tertiary.png", "Border": Vars.ButtonBorder() } }, "Hovered": { "Background": { "TexturePath": "Common/Buttons/Tertiary_Hovered.png", "Border": Vars.ButtonBorder() } }, "Pressed": { "Background": { "TexturePath": "Common/Buttons/Tertiary_Pressed.png", "Border": Vars.ButtonBorder() } }, "Disabled": { "Background": { "TexturePath": "Common/Buttons/Disabled.png", "Border": Vars.ButtonBorder() } }, "Sounds": Vars.ButtonSounds() }),
+    SmallSecondaryTextButtonStyle: (): TextButtonStyle => ({ "Default": { "Background": { "TexturePath": "Common/Buttons/Secondary.png", "Border": Vars.ButtonBorder() }, "LabelStyle": Vars.SmallSecondaryButtonLabelStyle() }, "Hovered": { "Background": { "TexturePath": "Common/Buttons/Secondary_Hovered.png", "Border": Vars.ButtonBorder() }, "LabelStyle": Vars.SmallSecondaryButtonLabelStyle() }, "Pressed": { "Background": { "TexturePath": "Common/Buttons/Secondary_Pressed.png", "Border": Vars.ButtonBorder() }, "LabelStyle": Vars.SmallSecondaryButtonLabelStyle() }, "Disabled": { "Background": { "TexturePath": "Common/Buttons/Disabled.png", "Border": Vars.ButtonBorder() }, "LabelStyle": Vars.SmallSecondaryButtonLabelStyle() } }),
+    TertiaryTextButtonStyle: (): TextButtonStyle => ({ "Default": { "Background": { "TexturePath": "Common/Buttons/Tertiary.png", "Border": Vars.ButtonBorder() }, "LabelStyle": Vars.SecondaryButtonLabelStyle() }, "Hovered": { "Background": { "TexturePath": "Common/Buttons/Tertiary_Hovered.png", "Border": Vars.ButtonBorder() }, "LabelStyle": Vars.SecondaryButtonLabelStyle() }, "Pressed": { "Background": { "TexturePath": "Common/Buttons/Tertiary_Pressed.png", "Border": Vars.ButtonBorder() }, "LabelStyle": Vars.SecondaryButtonLabelStyle() }, "Disabled": { "Background": { "TexturePath": "Common/Buttons/Disabled.png", "Border": Vars.ButtonBorder() }, "LabelStyle": Vars.SecondaryButtonLabelStyle() } }),
+    DefaultColorPickerStyle: (): ColorPickerStyle => ({ "OpacitySelectorBackground": "Common/ColorPickerOpacitySelectorBackground.png", "ButtonBackground": "Common/ColorPickerButton.png", "ButtonFill": "Common/ColorPickerFill.png", "TextFieldDecoration": { "Default": { "Background": "#000000(0.5)" } }, "TextFieldPadding": { "Left": 7 }, "TextFieldHeight": 32 }),
+    DefaultColorPickerDropdownBoxStyle: (): ColorPickerDropdownBoxStyle => ({ "ColorPickerStyle": Vars.DefaultColorPickerStyle(), "Background": { "Default": "Common/ColorPickerDropdownBoxBackground.png" }, "ArrowBackground": { "Default": "Common/ColorPickerDropdownBoxArrow.png" }, "Overlay": { "Default": "Common/ColorPickerDropdownBoxOverlay.png" }, "PanelBackground": { "TexturePath": "Common/DropdownBox.png", "Border": 16 }, "PanelPadding": { "Full": 15 }, "PanelOffset": 10, "ArrowAnchor": { "Width": 11, "Height": 7, "Right": 3, "Bottom": 3 } }),
+    DefaultScrollbarStyle: (): ScrollbarStyle => ({ "Spacing": 6, "Size": 6, "Background": { "TexturePath": "Common/Scrollbar.png", "Border": 3 }, "Handle": { "TexturePath": "Common/ScrollbarHandle.png", "Border": 3 }, "HoveredHandle": { "TexturePath": "Common/ScrollbarHandleHovered.png", "Border": 3 }, "DraggedHandle": { "TexturePath": "Common/ScrollbarHandleDragged.png", "Border": 3 } }),
+    DefaultExtraSpacingScrollbarStyle: (): ScrollbarStyle => ({ ...Vars.DefaultScrollbarStyle(), "Spacing": 12 }),
+    TranslucentScrollbarStyle: (): ScrollbarStyle => ({ "Spacing": 6, "Size": 6, "OnlyVisibleWhenHovered": true, "Handle": { "TexturePath": "Common/ScrollbarHandle.png", "Border": 3 } }),
+    DefaultPlaceholderScrollbarStyle: (): ScrollbarStyle => ({ "Spacing": 12, "Size": 10 }),
+    DefaultCheckBoxStyle: (): CheckBoxStyle => ({ "Unchecked": { "DefaultBackground": { "Color": "#00000000" }, "HoveredBackground": { "Color": "#00000000" }, "PressedBackground": { "Color": "#00000000" }, "DisabledBackground": { "Color": "#424242" }, "ChangedSound": { "SoundPath": Sounds.Vars.Untick(), "Volume": 6 } }, "Checked": { "DefaultBackground": { "TexturePath": "Common/Checkmark.png" }, "HoveredBackground": { "TexturePath": "Common/Checkmark.png" }, "PressedBackground": { "TexturePath": "Common/Checkmark.png" }, "ChangedSound": { "SoundPath": Sounds.Vars.Tick(), "Volume": 6 } } }),
+    InputBoxBackground: (): PatchStyle => ({ "TexturePath": "Common/InputBox.png", "Border": 16 }),
+    InputBoxHoveredBackground: (): PatchStyle => ({ "TexturePath": "Common/InputBoxHovered.png", "Border": 16 }),
+    InputBoxPressedBackground: (): PatchStyle => ({ "TexturePath": "Common/InputBoxPressed.png", "Border": 16 }),
+    InputBoxSelectedBackground: (): PatchStyle => ({ "TexturePath": "Common/InputBoxSelected.png", "Border": 16 }),
+    DefaultInputFieldStyle: (): InputFieldStyle => ({}),
+    DefaultInputFieldPlaceholderStyle: (): InputFieldStyle => ({ "TextColor": "#6e7da1" }),
+    DefaultDropdownBoxLabelStyle: (): LabelStyle => ({ "TextColor": "#96a9be", "RenderUppercase": true, "VerticalAlignment": "Center", "FontSize": 13 }),
+    DefaultDropdownBoxEntryLabelStyle: (): LabelStyle => ({ ...Vars.DefaultDropdownBoxLabelStyle(), "TextColor": "#b7cedd" }),
+    DefaultDropdownBoxStyle: (): DropdownBoxStyle => ({ "DefaultBackground": { "TexturePath": "Common/Dropdown.png", "Border": 16 }, "HoveredBackground": { "TexturePath": "Common/DropdownHovered.png", "Border": 16 }, "PressedBackground": { "TexturePath": "Common/DropdownPressed.png", "Border": 16 }, "DefaultArrowTexturePath": "Common/DropdownCaret.png", "HoveredArrowTexturePath": "Common/DropdownCaret.png", "PressedArrowTexturePath": "Common/DropdownPressedCaret.png", "ArrowWidth": 13, "ArrowHeight": 18, "LabelStyle": Vars.DefaultDropdownBoxLabelStyle(), "EntryLabelStyle": Vars.DefaultDropdownBoxEntryLabelStyle(), "NoItemsLabelStyle": { ...Vars.DefaultDropdownBoxEntryLabelStyle(), "TextColor": "#b7cedd(0.5)" }, "SelectedEntryLabelStyle": { ...Vars.DefaultDropdownBoxEntryLabelStyle(), "RenderBold": true }, "HorizontalPadding": 8, "PanelScrollbarStyle": Vars.DefaultScrollbarStyle(), "PanelBackground": { "TexturePath": "Common/DropdownBox.png", "Border": 16 }, "PanelPadding": 6, "PanelAlign": "Right", "PanelOffset": 7, "EntryHeight": 31, "EntriesInViewport": 10, "HorizontalEntryPadding": 7, "HoveredEntryBackground": { "Color": "#0a0f17" }, "PressedEntryBackground": { "Color": "#0f1621" }, "Sounds": Sounds.Vars.DropdownBox(), "EntrySounds": Sounds.Vars.ButtonsLight(), "FocusOutlineSize": 1, "FocusOutlineColor": "#ffffff(0.4)" }),
+    DropdownBoxHeight: (): number => 32,
+    DefaultFileDropdownBoxStyle: (): { DefaultBackground?: PatchStyle; HoveredBackground?: PatchStyle; PressedBackground?: PatchStyle; DefaultArrowTexturePath?: string; HoveredArrowTexturePath?: string; PressedArrowTexturePath?: string; ArrowWidth?: number; ArrowHeight?: number; LabelStyle?: LabelStyle; HorizontalPadding?: number; PanelAlign?: string; PanelOffset?: number; Sounds?: unknown } => ({ "DefaultBackground": { "TexturePath": "Common/Dropdown.png", "Border": 16 }, "HoveredBackground": { "TexturePath": "Common/DropdownHovered.png", "Border": 16 }, "PressedBackground": { "TexturePath": "Common/DropdownPressed.png", "Border": 16 }, "DefaultArrowTexturePath": "Common/DropdownCaret.png", "HoveredArrowTexturePath": "Common/DropdownCaret.png", "PressedArrowTexturePath": "Common/DropdownPressedCaret.png", "ArrowWidth": 9, "ArrowHeight": 18, "LabelStyle": { "TextColor": "#96a9be", "RenderBold": true, "VerticalAlignment": "Center", "FontSize": 18 }, "HorizontalPadding": 14, "PanelAlign": "Bottom", "PanelOffset": 7, "Sounds": Sounds.Vars.DropdownBox() }),
+    DefaultPopupMenuLayerStyle: (): { Background?: PatchStyle; Padding?: number; BaseHeight?: number; MaxWidth?: number; TitleStyle?: LabelStyle; TitleBackground?: PatchStyle; RowHeight?: number; ItemLabelStyle?: LabelStyle; ItemPadding?: Anchor; ItemBackground?: PatchStyle; ItemIconSize?: number; HoveredItemBackground?: PatchStyle; PressedItemBackground?: PatchStyle; ItemSounds?: unknown } => ({ "Background": { "TexturePath": "Common/Popup.png", "Border": 16 }, "Padding": 2, "BaseHeight": 5, "MaxWidth": 200, "TitleStyle": { "RenderBold": true, "RenderUppercase": true, "FontSize": 13, "TextColor": "#ccb588" }, "TitleBackground": { "TexturePath": "Common/PopupTitle.png" }, "RowHeight": 25, "ItemLabelStyle": { "RenderBold": true, "RenderUppercase": true, "FontSize": 11, "TextColor": "#96a9be(0.8)" }, "ItemPadding": { "Vertical": 5, "Horizontal": 8 }, "ItemBackground": { "TexturePath": "Common/PopupItem.png" }, "ItemIconSize": 16, "HoveredItemBackground": { "TexturePath": "Common/HoveredPopupItem.png" }, "PressedItemBackground": { "TexturePath": "Common/PressedPopupItem.png" }, "ItemSounds": Sounds.Vars.ButtonsLight() }),
+    PopupTitleStyle: (): LabelStyle => ({ "FontSize": 38, "LetterSpacing": 2, "RenderUppercase": true, "RenderBold": true, "HorizontalAlignment": "Center", "VerticalAlignment": "Center" }),
+    SubtitleStyle: (): LabelStyle => ({ "FontSize": 15, "RenderUppercase": true, "TextColor": "#96a9be" }),
+    TitleStyle: (): LabelStyle => ({ "FontSize": 15, "VerticalAlignment": "Center", "RenderUppercase": true, "TextColor": "#b4c8c9", "FontName": "Secondary", "RenderBold": true, "LetterSpacing": 0 }),
+    TitleHeight: (): number => 38,
+    TitleOffset: (): number => 4,
+    ContentPaddingFull: (): number => (9 + 8),
+    ContentPadding: (): Padding => ({ "Full": Vars.ContentPaddingFull(), "Top": 8 }),
+    TopTabAnchor: (): Anchor => ({ "Width": 82, "Height": 62, "Right": 5, "Bottom": -(14) }),
+    TopTabStyle: (): { Background?: string; Overlay?: string; IconAnchor?: Anchor; Anchor?: Anchor } => ({ "Background": "Common/Tab.png", "Overlay": "Common/TabOverlay.png", "IconAnchor": { "Width": 44, "Height": 44 }, "Anchor": { "Width": 82, "Height": 62, "Right": 5, "Bottom": -(14) } }),
+    TopTabsStyle: (): TabNavigationStyle => ({ "TabStyle": { "Default": Vars.TopTabStyle(), "Hovered": { ...Vars.TopTabStyle(), "Anchor": { ...Vars.TopTabAnchor(), "Bottom": -(5) } }, "Pressed": { ...Vars.TopTabStyle(), "Anchor": { ...Vars.TopTabAnchor(), "Bottom": -(8) } } }, "SelectedTabStyle": { "Default": { ...Vars.TopTabStyle(), "Anchor": { ...Vars.TopTabAnchor(), "Bottom": 4 }, "IconAnchor": { "Width": 44, "Height": 44 }, "Overlay": "Common/TabSelectedOverlay.png" } } }),
+    HeaderTabStyle: (): { Anchor?: Anchor; IconOpacity?: number } => ({ "Anchor": { "Width": 34, "Height": 34 }, "IconOpacity": 0.25 }),
+    HeaderTabsStyle: (): TabNavigationStyle => ({ "TabStyle": { "Default": Vars.HeaderTabStyle() }, "SelectedTabStyle": { "Default": { ...Vars.HeaderTabStyle(), "IconOpacity": 1 } }, "SeparatorAnchor": { "Width": 5, "Height": 34 }, "SeparatorBackground": "Common/HeaderTabSeparator.png" }),
+    ClearButtonStyle: (): InputFieldButtonStyle => ({ "Texture": { "TexturePath": "Common/ClearInputIcon.png", "Color": "#ffffff(0.3)" }, "HoveredTexture": { "TexturePath": "Common/ClearInputIcon.png", "Color": "#ffffff(0.5)" }, "PressedTexture": { "TexturePath": "Common/ClearInputIcon.png", "Color": "#ffffff(0.4)" }, "Width": 16, "Height": 16, "Side": "Right", "Offset": 10 }),
+    HeaderTextButtonLabelStyle: (): LabelStyle => ({ ...Vars.TitleStyle(), "VerticalAlignment": "Center", "TextColor": "#d3d6db", "FontName": "Default", "RenderBold": true, "LetterSpacing": 1 }),
+    HeaderTextButtonStyle: (): TextButtonStyle => ({ "Default": { "LabelStyle": Vars.HeaderTextButtonLabelStyle() }, "Hovered": { "LabelStyle": { ...Vars.HeaderTextButtonLabelStyle(), "TextColor": "#eaebee" } }, "Pressed": { "LabelStyle": { ...Vars.HeaderTextButtonLabelStyle(), "TextColor": "#b6bbc2" } } }),
+    InnerPaddingValue: (): number => 8,
+    FullPaddingValue: (): number => (Vars.InnerPaddingValue() + 9),
+    DefaultSliderStyle: (): SliderStyle => ({ "Background": { "TexturePath": "Common/SliderBackground.png", "Border": 2 }, "Handle": "Common/SliderHandle.png", "HandleWidth": 16, "HandleHeight": 16, "Sounds": { "MouseHover": { "SoundPath": Sounds.Vars.ButtonsLightHover(), "Volume": 6 } } }),
+    DefaultTextTooltipStyle: (): TextTooltipStyle => ({ "Background": { "TexturePath": "Common/TooltipDefaultBackground.png", "Border": 24 }, "MaxWidth": 400, "LabelStyle": { "Wrap": true, "FontSize": 16 }, "Padding": { Full: 24 } })
+};
 
 type PanelCustomProps = {
 
@@ -65,11 +148,11 @@ const TextButton = defineComponent({
     props: {
         sounds: {
             type: Object as PropType<{}>,
-            default: () => ({}),
+            default: () => (({})),
         },
         anchor: {
             type: Object as PropType<{ Bottom?: number; Full?: number; Height?: number; Horizontal?: number; Left?: number; MaxWidth?: number; MinWidth?: number; Right?: number; Top?: number; Vertical?: number; Width?: number }>,
-            default: () => ({}),
+            default: () => (({})),
         },
         text: { type: null, required: false }
     },
@@ -96,11 +179,11 @@ const Button = defineComponent({
         defaultSquareButtonStyle: { type: null, required: false },
         sounds: {
             type: Object as PropType<{}>,
-            default: () => ({}),
+            default: () => (({})),
         },
         anchor: {
             type: Object as PropType<{ Bottom?: number; Full?: number; Height?: number; Horizontal?: number; Left?: number; MaxWidth?: number; MinWidth?: number; Right?: number; Top?: number; Vertical?: number; Width?: number }>,
-            default: () => ({}),
+            default: () => (({})),
         }
     },
     setup(props, { slots }) {
@@ -125,11 +208,11 @@ const CancelTextButton = defineComponent({
     props: {
         sounds: {
             type: Object as PropType<{}>,
-            default: () => ({}),
+            default: () => (({})),
         },
         anchor: {
             type: Object as PropType<{ Bottom?: number; Full?: number; Height?: number; Horizontal?: number; Left?: number; MaxWidth?: number; MinWidth?: number; Right?: number; Top?: number; Vertical?: number; Width?: number }>,
-            default: () => ({}),
+            default: () => (({})),
         },
         text: { type: null, required: false }
     },
@@ -155,15 +238,15 @@ const CancelButton = defineComponent({
     props: {
         sounds: {
             type: Object as PropType<{}>,
-            default: () => ({}),
+            default: () => (({})),
         },
         anchor: {
             type: Object as PropType<{ Bottom?: number; Full?: number; Height?: number; Horizontal?: number; Left?: number; MaxWidth?: number; MinWidth?: number; Right?: number; Top?: number; Vertical?: number; Width?: number }>,
-            default: () => ({}),
+            default: () => (({})),
         },
         width: {
             type: Number,
-            default: 44,
+            default: Vars.DefaultButtonHeight,
         }
     },
     setup(props, { slots }) {
@@ -188,11 +271,11 @@ const SmallSecondaryTextButton = defineComponent({
     props: {
         sounds: {
             type: Object as PropType<{}>,
-            default: () => ({}),
+            default: () => (({})),
         },
         anchor: {
             type: Object as PropType<{ Bottom?: number; Full?: number; Height?: number; Horizontal?: number; Left?: number; MaxWidth?: number; MinWidth?: number; Right?: number; Top?: number; Vertical?: number; Width?: number }>,
-            default: () => ({}),
+            default: () => (({})),
         },
         text: { type: null, required: false }
     },
@@ -218,11 +301,11 @@ const SmallTertiaryTextButton = defineComponent({
     props: {
         sounds: {
             type: Object as PropType<{}>,
-            default: () => ({}),
+            default: () => (({})),
         },
         anchor: {
             type: Object as PropType<{ Bottom?: number; Full?: number; Height?: number; Horizontal?: number; Left?: number; MaxWidth?: number; MinWidth?: number; Right?: number; Top?: number; Vertical?: number; Width?: number }>,
-            default: () => ({}),
+            default: () => (({})),
         },
         text: { type: null, required: false }
     },
@@ -248,11 +331,11 @@ const SecondaryTextButton = defineComponent({
     props: {
         sounds: {
             type: Object as PropType<{}>,
-            default: () => ({}),
+            default: () => (({})),
         },
         anchor: {
             type: Object as PropType<{ Bottom?: number; Full?: number; Height?: number; Horizontal?: number; Left?: number; MaxWidth?: number; MinWidth?: number; Right?: number; Top?: number; Vertical?: number; Width?: number }>,
-            default: () => ({}),
+            default: () => (({})),
         },
         text: { type: null, required: false }
     },
@@ -278,15 +361,15 @@ const SecondaryButton = defineComponent({
     props: {
         sounds: {
             type: Object as PropType<{}>,
-            default: () => ({}),
+            default: () => (({})),
         },
         anchor: {
             type: Object as PropType<{ Bottom?: number; Full?: number; Height?: number; Horizontal?: number; Left?: number; MaxWidth?: number; MinWidth?: number; Right?: number; Top?: number; Vertical?: number; Width?: number }>,
-            default: () => ({}),
+            default: () => (({})),
         },
         width: {
             type: Number,
-            default: 44,
+            default: Vars.DefaultButtonHeight,
         }
     },
     setup(props, { slots }) {
@@ -311,11 +394,11 @@ const TertiaryTextButton = defineComponent({
     props: {
         sounds: {
             type: Object as PropType<{}>,
-            default: () => ({}),
+            default: () => (({})),
         },
         anchor: {
             type: Object as PropType<{ Bottom?: number; Full?: number; Height?: number; Horizontal?: number; Left?: number; MaxWidth?: number; MinWidth?: number; Right?: number; Top?: number; Vertical?: number; Width?: number }>,
-            default: () => ({}),
+            default: () => (({})),
         },
         text: { type: null, required: false }
     },
@@ -341,15 +424,15 @@ const TertiaryButton = defineComponent({
     props: {
         sounds: {
             type: Object as PropType<{}>,
-            default: () => ({}),
+            default: () => (({})),
         },
         anchor: {
             type: Object as PropType<{ Bottom?: number; Full?: number; Height?: number; Horizontal?: number; Left?: number; MaxWidth?: number; MinWidth?: number; Right?: number; Top?: number; Vertical?: number; Width?: number }>,
-            default: () => ({}),
+            default: () => (({})),
         },
         width: {
             type: Number,
-            default: 44,
+            default: Vars.DefaultButtonHeight,
         }
     },
     setup(props, { slots }) {
@@ -413,7 +496,7 @@ const CheckBoxWithLabel = defineComponent({
     props: {
         checked: {
             type: Boolean,
-            default: false,
+            default: () => false,
         },
         text: { type: null, required: false }
     },
@@ -440,7 +523,7 @@ const TextField = defineComponent({
     props: {
         anchor: {
             type: Object as PropType<{}>,
-            default: () => ({}),
+            default: () => (({})),
         }
     },
     setup(props, { slots }) {
@@ -463,7 +546,7 @@ const NumberField = defineComponent({
     props: {
         anchor: {
             type: Object as PropType<{}>,
-            default: () => ({}),
+            default: () => (({})),
         }
     },
     setup(props, { slots }) {
@@ -486,7 +569,7 @@ const DropdownBox = defineComponent({
     props: {
         anchor: {
             type: Object as PropType<{}>,
-            default: () => ({}),
+            default: () => (({})),
         }
     },
     setup(props, { slots }) {
@@ -509,7 +592,7 @@ const ContentSeparator = defineComponent({
     props: {
         anchor: {
             type: Object as PropType<{ Bottom?: number; Full?: number; Height?: number; Horizontal?: number; Left?: number; MaxWidth?: number; MinWidth?: number; Right?: number; Top?: number; Vertical?: number; Width?: number }>,
-            default: () => ({}),
+            default: () => (({})),
         }
     },
     setup(props, { slots }) {
@@ -532,7 +615,7 @@ const DefaultSpinner = defineComponent({
     props: {
         anchor: {
             type: Object as PropType<{}>,
-            default: () => ({}),
+            default: () => (({})),
         }
     },
     setup(props, { slots }) {
@@ -636,11 +719,11 @@ const Title = defineComponent({
     props: {
         alignment: {
             type: String,
-            default: "Center",
+            default: () => "Center",
         },
         text: {
             type: String,
-            default: "",
+            default: () => "",
         }
     },
     setup(props, { slots }) {
@@ -663,7 +746,7 @@ const HeaderSearch = defineComponent({
     props: {
         marginRight: {
             type: Number,
-            default: 10,
+            default: () => 10,
         }
     },
     setup(props, { slots }) {
@@ -729,11 +812,11 @@ const PanelTitle = defineComponent({
     props: {
         alignment: {
             type: String,
-            default: "Start",
+            default: () => "Start",
         },
         text: {
             type: String,
-            default: "",
+            default: () => "",
         }
     },
     setup(props, { slots }) {
@@ -779,7 +862,7 @@ const PanelSeparatorFancy = defineComponent({
     props: {
         anchor: {
             type: Object as PropType<{}>,
-            default: () => ({}),
+            default: () => (({})),
         }
     },
     setup(props, { slots }) {
@@ -809,11 +892,11 @@ const Container = defineComponent({
     props: {
         contentPadding: {
             type: Object as PropType<{ Bottom?: number; Full?: number; Horizontal?: number; Left?: number; Right?: number; Top?: number; Vertical?: number }>,
-            default: () => ({ "Full": 17 }),
+            default: () => (({ "Full": Vars.FullPaddingValue() })),
         },
         closeButton: {
             type: Boolean,
-            default: false,
+            default: () => false,
         }
     },
     setup(props, { slots }) {
@@ -843,11 +926,11 @@ const DecoratedContainer = defineComponent({
     props: {
         contentPadding: {
             type: Object as PropType<{ Bottom?: number; Full?: number; Horizontal?: number; Left?: number; Right?: number; Top?: number; Vertical?: number }>,
-            default: () => ({ "Full": 17 }),
+            default: () => (({ "Full": (9 + 8) })),
         },
         closeButton: {
             type: Boolean,
-            default: false,
+            default: () => false,
         }
     },
     setup(props, { slots }) {
