@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Common } from '@/components/Common';
+import { Common, Vars } from '@/components/Common';
 import { Core } from '@/components/core';
 import { computed, onBeforeUnmount, ref } from 'vue';
 import { useData } from '../composables/useData';
@@ -14,6 +14,7 @@ function clickTest() {
     someState.value = !someState.value
     testFn.value()
     console.log("Return of testFn2: ", testFn2.value(123, "hello"))
+    close.value();
 }
 
 
@@ -23,6 +24,8 @@ const text = ref("nothing yet")
 const test = useData<string>("test")
 const test2 = useData("test2")
 const test3 = useData("counter")
+const close = useData("close", () => { })
+
 
 
 interface TestEntry {

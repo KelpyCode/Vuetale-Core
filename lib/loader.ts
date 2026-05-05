@@ -80,6 +80,12 @@ export function getRegisteredComponent(path: string): unknown | undefined {
 export function removeUserApp(id: string) {
     const app = USER_APPS.get(id);
     if (app) {
+        // Cancel any timers owned by this app before unmounting
+        try {
+            if (typeof (globalThis as any).__vt_cancelTimersForApp === 'function') {
+                (globalThis as any).__vt_cancelTimersForApp(id);
+            }
+        } catch (e) { /* ignore */ }
         app.unmount();
         USER_APPS.delete(id);
         USER_APPS_REF.delete(id);
@@ -154,6 +160,13 @@ expose("_vt", {
     registerComponent,
     setAppData,
     getRegisteredComponent,
+    cancelTimersForApp: (id: string) => {
+        try {
+            if (typeof (globalThis as any).__vt_cancelTimersForApp === 'function') {
+                (globalThis as any).__vt_cancelTimersForApp(id);
+            }
+        } catch (e) { /* ignore */ }
+    },
     USER_APPS_REF,
     USER_APPS_DATA,
 })
